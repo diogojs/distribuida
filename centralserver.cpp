@@ -42,11 +42,12 @@ int main(int argc, char** argv) {
                 }
             }
             if (tag == TAG_GIVEBACK) {
-                queue.pop();
+                queue.erase(queue.begin());
                 token = 1;
             }
             if (queue.size() > 0 && token) {
-                MPI_Send(&token, 1, MPI_UNSIGNED, queue.pop(), TAG_SEND, MPI_COMM_WORLD);
+                MPI_Send(&token, 1, MPI_UNSIGNED, queue.front(), TAG_SEND, MPI_COMM_WORLD);
+                queue.erase(queue.begin());
                 token = 0;
             }
             if (tag == TAG_EXIT)
