@@ -5,13 +5,14 @@
 #include <stdlib.h>
 #include <mpi.h>
 
+#include "globals.h"
+
 class FakeProcess {
 public:
-    FakeProcess(int rank, bool token, double rate = 2.0f):
+    FakeProcess(int rank, bool token, double rate = 0.2):
         _rank{rank},
         _token{token},
-        _rate{rate},
-        _timesUsedResource{0}
+        _rate{rate}
     {
         srand(0);
     }
@@ -19,15 +20,16 @@ public:
     bool useResource() {
         if (_token) {
             std::cout << "Process " << _rank << " used the resource." << std::endl;
-            ++_timesUsedResource;
+            MPI_Send(&token, 1, MPI_UNSIGNED, 0, TAG_GIVEBACK, MPI_COMM_WORLD);
         } else {
             std::cout << "Process " << _rank << " waiting for token..." << std::endl;
+            MPI_Recv(&token, 1, MPI_UNSIGNED, 0, TAG_SEND, MPI_COMM_WORLD, &st);
         }
         return true;
     }
 
     bool doOtherStuff() {
-        std::cout << "Process " << _rank << " doing other stuff " << std::endl;
+        std::cout << "Process " << _rank << " doing other stuff." << std::endl;
         return false;
     }
 
@@ -52,7 +54,6 @@ private:
     int _rank;
     bool _token;
     double _rate;
-    unsigned _timesUsedResource;
 };
 
 #endif
