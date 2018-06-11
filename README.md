@@ -11,11 +11,10 @@ Utilizando Ubuntu 18.04:
 
 `sudo apt install openmpi-bin openmpi-common libopenmpi-dev`
 
-Compilar com: `make`
-
 ### Execução
 
-Para executar basta rodar o comando:
+Para executar os algoritmos basta rodar os comando:
 
-`make run`
+- Anel: `make ring`
+- Servidor Central: `make server`
 
