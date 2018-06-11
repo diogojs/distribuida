@@ -13,7 +13,7 @@ Utilizando Ubuntu 18.04:
 
 ### Execução
 
-Para executar os algoritmos basta rodar os comando:
+Para executar os algoritmos basta rodar os comandos:
 
 - Anel: `make ring`
 - Servidor Central: `make server`
