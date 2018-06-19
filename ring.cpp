@@ -43,8 +43,8 @@ int main(int argc, char** argv) {
         if (token) {
             printf("Process %d sending token to %d.\n", rank, (rank+1)%size);
             MPI_Send(&token, 1, MPI_UNSIGNED, (rank+1)%size, 0, MPI_COMM_WORLD);
-        }
-        proc.token(0);
+            proc.token(0);
+        }        
     }
 
     MPI_Finalize();

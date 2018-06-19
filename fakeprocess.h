@@ -7,21 +7,17 @@
 
 class FakeProcess {
 public:
-    FakeProcess(int rank, bool token, double rate = 2.0f):
+    FakeProcess(int rank, bool token, double rate = 0.5f):
         _rank{rank},
         _token{token},
-        _rate{rate},
-        _timesUsedResource{0}
+        _rate{rate}
     {
-        srand(0);
+        srand(time(0));
     }
 
     bool useResource() {
         if (_token) {
             std::cout << "Process " << _rank << " used the resource." << std::endl;
-            ++_timesUsedResource;
-        } else {
-            std::cout << "Process " << _rank << " waiting for token..." << std::endl;
         }
         return true;
     }
@@ -35,7 +31,7 @@ public:
         double chance = (double)rand()/(double)(RAND_MAX);
         if (chance < _rate) { // Wants to access resource
             return useResource();
-        } else {
+        } else { // is doing other stuff
             return doOtherStuff();
         }
     }
@@ -52,7 +48,6 @@ private:
     int _rank;
     bool _token;
     double _rate;
-    unsigned _timesUsedResource;
 };
 
 #endif

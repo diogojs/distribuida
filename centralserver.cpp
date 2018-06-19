@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
             int enquirer = st.MPI_SOURCE;
             int tag = st.MPI_TAG;
             if (tag == TAG_ASK) {
-                if (token) {
+                if (token && queue.size() == 0) {
                     printf("Server sending token to %d\n", enquirer);
                     MPI_Send(&token, 1, MPI_UNSIGNED, enquirer, TAG_SEND, MPI_COMM_WORLD);
                     token = 0;
